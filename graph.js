@@ -21,7 +21,7 @@ let transactionsData = [
         
         let spendChart = dc.barChart("#chart-goes-here");
         
-        let personColors = d3.scale.ordinal().range(["red", "lemonchiffon", "blue"]);
+        let personColors = d3.scale.ordinal().range(["red", "lemonchiffon", "blue"]
         
         spendChart
         .width(300)
