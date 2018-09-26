@@ -53,6 +53,7 @@ function makeCharts(error, transactionsData) {
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
         .xAxisLabel("Store")
+        .elasticY(true)
         .yAxis().ticks(4)
 
 
@@ -68,6 +69,7 @@ function makeCharts(error, transactionsData) {
         .radius(150)
         .dimension(stateDim)
         .group(totalSpendPerState)
+        .transitionDuration(1500)
 
 
     dc.renderAll();
@@ -90,6 +92,10 @@ function makeCharts(error, transactionsData) {
         .group(totalSpendPerDate)
         .x(d3.time.scale().domain([minDate, maxDate]))
         .xAxisLabel("Month")
+        .transitionDuration(1500)
+        .elasticY(true)
+        .renderHorizontalGridLines(true)
+        .renderVerticalGridLines(true)
         .yAxis().ticks(8);   
 
 
