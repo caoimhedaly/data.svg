@@ -8,9 +8,12 @@ function makeCharts(error, transactionsData) {
 
     let ndx = crossfilter(transactionsData);
 
-    //let nameDim = ndx.dimension(function(d) {
-    //  return d.name;//
-    // }); //
+    let makeMyDay = d3.time.format("%d/%m/%Y").parse;
+    
+    transactionsData.forEach(function(d) {
+        d.date = makeMyDay(d.date);
+    })
+    //for each date in the array, replace the string with a date object//
 
     let nameDim = ndx.dimension(dc.pluck("name"));
 
@@ -68,4 +71,28 @@ function makeCharts(error, transactionsData) {
 
 
     dc.renderAll();
+    
+    let dateDim = ndx.dimension(dc.pluck("date"));
+    let totalSpendPerDate = dateDim.group().reduceSum(dc.pluck("spend"));
+
+    
+    
+    let minDate = dateDim.bottom(1)[0].date;
+    let maxDate = dateDim.top(1)[0].date;
+    
+    let lineSpend = dc.lineChart("#line-chart");
+    
+    
+         lineSpend
+        .width(1000)
+        .height(300)
+        .dimension(dateDim)
+        .group(totalSpendPerDate)
+        .x(d3.time.scale().domain([minDate, maxDate]))
+        .xAxisLabel("Month")
+        .yAxis().ticks(8);   
+
+
+    dc.renderAll();
+
 }
